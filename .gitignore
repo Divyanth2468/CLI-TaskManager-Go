@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # If you prefer the allow list template instead of the deny list, see community template:
 # https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
 #
@@ -25,6 +26,8 @@ go.work.sum
 # env file
 .env
 =======
+=======
+>>>>>>> 1e0de48d3a4087a7bc7320c0c97c94f73041e774
 # Go build artifacts
 /bin/
 /obj/
@@ -52,4 +55,7 @@ go.work.sum
 
 # Other editor-specific files
 *.log
+<<<<<<< HEAD
 >>>>>>> e766222 (Basic version with text file for storage)
+=======
+>>>>>>> 1e0de48d3a4087a7bc7320c0c97c94f73041e774
