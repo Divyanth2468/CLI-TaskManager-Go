@@ -1,0 +1,27 @@
+# Go build artifacts
+/bin/
+/obj/
+
+# Go modules
+/vendor/
+
+# Ignore the Go workspace file
+go.work
+go.work.sum
+
+# Ignore test binary files
+*.test
+
+# IDE/editor files
+.vscode/
+.idea/
+*.iml
+
+# MacOS system files
+.DS_Store
+
+# Linux system files
+*.swp
+
+# Other editor-specific files
+*.log
