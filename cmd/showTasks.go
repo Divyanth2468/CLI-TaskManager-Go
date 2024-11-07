@@ -16,16 +16,16 @@ var statusSort string
 var showtasksCmd = &cobra.Command{
 	Use:   "showtasks",
 	Short: "Shows list of tasks you have added",
-	Long: `Shows list of tasks you have added`,
+	Long:  `Shows list of tasks you have added`,
 	Run: func(cmd *cobra.Command, args []string) {
-	if prioritySort != "" || statusSort != "" {
-		sortTasks(prioritySort, statusSort)
-	}else{
-		if _,err := readFile(Path, "showtasks"); err!=nil {
-			fmt.Println("Error showing tasks", err)
-		 }
-	}
-	 
+		if prioritySort != "" || statusSort != "" {
+			sortTasks(prioritySort, statusSort)
+		} else {
+			if _, err := readFile(Path, "showtasks"); err != nil {
+				fmt.Println("Error showing tasks", err)
+			}
+		}
+
 	},
 }
 

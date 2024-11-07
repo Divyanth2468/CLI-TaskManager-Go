@@ -20,37 +20,37 @@ var newStatus string
 var updateCmd = &cobra.Command{
 	Use:   "update",
 	Short: "Update specific tasks",
-	Long: `Update specific tasks`,
+	Long:  `Update specific tasks`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			fmt.Println("missing index and updated task value")
 		}
-			data, err := os.ReadFile(Path)
-			if err != nil {
-				panic(err)
-			}
-			ind, err := strconv.Atoi(args[0])
-			if err!=nil {
-				panic(err)
-			}
-			content := []taskListWrite{}
-			if err=json.Unmarshal(data, &content); err!=nil {
-				panic(err)
-			}
-			if newTaskValue != "" {
-				content[ind].Tasks = newTaskValue
-			} 
-			if newPriority !="" {
-				content[ind].Priority = newPriority
-			} 
-			if newStatus != "" {
-				content[ind].Status = newStatus
-			}
-			data_new, err:=json.Marshal(content)
-			if err!=nil{
-				panic(err)
-			}
-			os.WriteFile(Path, data_new, 0666)
+		data, err := os.ReadFile(Path)
+		if err != nil {
+			panic(err)
+		}
+		ind, err := strconv.Atoi(args[0])
+		if err != nil {
+			panic(err)
+		}
+		content := []taskListWrite{}
+		if err = json.Unmarshal(data, &content); err != nil {
+			panic(err)
+		}
+		if newTaskValue != "" {
+			content[ind].Tasks = newTaskValue
+		}
+		if newPriority != "" {
+			content[ind].Priority = newPriority
+		}
+		if newStatus != "" {
+			content[ind].Status = newStatus
+		}
+		data_new, err := json.Marshal(content)
+		if err != nil {
+			panic(err)
+		}
+		os.WriteFile(Path, data_new, 0666)
 	},
 }
 

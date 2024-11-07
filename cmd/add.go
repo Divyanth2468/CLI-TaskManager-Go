@@ -16,20 +16,20 @@ var Path string = "/Users/uppuluridivyanthsatya/Desktop/Go/Tasks.json"
 var priority string
 var status string
 
-type taskListWrite struct{
-	Id int `json:"Id"`
-	Tasks string `json:"string"`
+type taskListWrite struct {
+	Id       int    `json:"Id"`
+	Tasks    string `json:"string"`
 	Priority string `json:"priority"`
-	Status string `json:"status"`
+	Status   string `json:"status"`
 }
 
 // addCmd represents the add command
 var addCmd = &cobra.Command{
 	Use:   "add",
 	Short: "Add tasks to your list",
-	Long: `Add tasks to your list`,
+	Long:  `Add tasks to your list`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// file, err :=os.OpenFile("/Users/uppuluridivyanthsatya/Desktop/Go/Tasks.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0664); 
+		// file, err :=os.OpenFile("/Users/uppuluridivyanthsatya/Desktop/Go/Tasks.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0664);
 		// if err!=nil{
 		// 	fmt.Println("Error Loading File", err)
 		// }
@@ -43,7 +43,7 @@ var addCmd = &cobra.Command{
 		// }
 		if len(args) == 0 {
 			fmt.Println("Please enter the task with priority and status , the defaults are low priority and running status")
-		} else{
+		} else {
 			data, err := os.ReadFile(Path)
 			if err != nil {
 				fmt.Println("Error reading json file", err)
@@ -53,27 +53,27 @@ var addCmd = &cobra.Command{
 			}
 			data_old := []taskListWrite{}
 			err = json.Unmarshal(data, &data_old)
-			if err!=nil{
+			if err != nil {
 				fmt.Println("Error unmarshalling data", err)
 			}
 			var index int = len(data_old)
-			data_new:=taskListWrite{}
+			data_new := taskListWrite{}
 			for _, arg := range args {
-				data_new.Id= index
-				data_new.Tasks= arg
-				data_new.Priority= priority
-				data_new.Status= status
+				data_new.Id = index
+				data_new.Tasks = arg
+				data_new.Priority = priority
+				data_new.Status = status
 				data_old = append(data_old, taskListWrite(data_new))
-				index+=1
+				index += 1
 			}
 			jsonData, err := json.Marshal(data_old)
-				if err!=nil{
-					fmt.Println("Error converting into json", err)
-				}
-				err = os.WriteFile(Path, jsonData, 0664)
-				if err!=nil {
-					fmt.Println("Error writing to file", err)
-				}
+			if err != nil {
+				fmt.Println("Error converting into json", err)
+			}
+			err = os.WriteFile(Path, jsonData, 0664)
+			if err != nil {
+				fmt.Println("Error writing to file", err)
+			}
 		}
 
 	},

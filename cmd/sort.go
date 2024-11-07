@@ -8,9 +8,9 @@ import (
 )
 
 var priorityMap = map[string]int{
-	"high": 3,
+	"high":   3,
 	"medium": 2,
-	"low": 1,
+	"low":    1,
 }
 
 func sortPriorityTasks(data []taskListWrite) (t []taskListWrite, err error) {
@@ -20,7 +20,7 @@ func sortPriorityTasks(data []taskListWrite) (t []taskListWrite, err error) {
 	return data, err
 }
 
-func printTasks(t []taskListWrite){
+func printTasks(t []taskListWrite) {
 	for _, t := range t {
 		fmt.Printf("Index: %d Task: %s Priority: %s Status: %s \n", t.Id, t.Tasks, t.Priority, t.Status)
 	}
@@ -34,29 +34,29 @@ func sortTasks(prioritySort string, statusSort string) (t []taskListWrite, err e
 	if err != nil {
 		panic(err)
 	}
-	data:=[]taskListWrite{}
+	data := []taskListWrite{}
 	err = json.Unmarshal(file, &data)
 	if err != nil {
 		panic(err)
 	}
 	statusdata := []taskListWrite{}
-	if statusSort!="" {
-		for _, task := range data{
-			if task.Status == statusSort{
-				statusdata=append(statusdata, task)
+	if statusSort != "" {
+		for _, task := range data {
+			if task.Status == statusSort {
+				statusdata = append(statusdata, task)
 			}
 		}
 	}
-	if prioritySort!=""{
-		if len(statusdata)!=0{
-			data ,err :=sortPriorityTasks(statusdata)
-			if err!=nil {
+	if prioritySort != "" {
+		if len(statusdata) != 0 {
+			data, err := sortPriorityTasks(statusdata)
+			if err != nil {
 				fmt.Println("Error sorting")
 			}
 			printTasks(data)
 		} else {
 			data, err := sortPriorityTasks(data)
-			if err!=nil{
+			if err != nil {
 				panic(err)
 			}
 			printTasks(data)

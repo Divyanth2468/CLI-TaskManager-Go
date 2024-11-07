@@ -14,24 +14,24 @@ import (
 var readCmd = &cobra.Command{
 	Use:   "read",
 	Short: "Read a specific task",
-	Long: `Read a specific task`,
+	Long:  `Read a specific task`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
-			if _, err := readFile(Path, "showtasks"); err!=nil {
+			if _, err := readFile(Path, "showtasks"); err != nil {
 				fmt.Println("Not able to read tasks", err)
 			}
 		} else {
 			content, err := readFile(Path, "read")
-			if err!=nil {
+			if err != nil {
 				fmt.Println("Not able to read tasks", err)
 			}
-			i,err := strconv.Atoi(args[0])
-			if err!=nil {
+			i, err := strconv.Atoi(args[0])
+			if err != nil {
 				fmt.Println("Please give a number")
 			}
-			if len(content)> i {
+			if len(content) > i {
 				fmt.Println(content[i])
-			} else{
+			} else {
 				fmt.Println("Please specify a number within the task list")
 			}
 		}

@@ -13,10 +13,10 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "mytasks",
 	Short: "A task manager cli application",
-	Long: `A task manager cli application`,
+	Long:  `A task manager cli application`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { 
+	// Run: func(cmd *cobra.Command, args []string) {
 	// },
 }
 
@@ -40,5 +40,3 @@ func init() {
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
-

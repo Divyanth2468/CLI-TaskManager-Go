@@ -16,16 +16,16 @@ import (
 var deleteCmd = &cobra.Command{
 	Use:   "delete",
 	Short: "Delete specific task by id or the entire task list",
-	Long: `Delete specific task by id or the entire task list`,
+	Long:  `Delete specific task by id or the entire task list`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			_, err := os.OpenFile(Path, os.O_WRONLY|os.O_TRUNC, 0666)
-			if err!=nil{
+			if err != nil {
 				fmt.Println("Cannot clear file", err)
 			}
 			fmt.Println("Task List is deleted")
 		} else {
-			ind, err:=strconv.Atoi(args[0])
+			ind, err := strconv.Atoi(args[0])
 			if err != nil {
 				fmt.Println("Please enter a valid index", err)
 			}
@@ -33,9 +33,9 @@ var deleteCmd = &cobra.Command{
 			if err != nil {
 				fmt.Println("Error reading tasks", err)
 			}
-			if ind <=len(content)-1 {
+			if ind <= len(content)-1 {
 				content = append(content[:ind], content[ind+1:]...)
-				for j:=ind; j<len(content);j++{
+				for j := ind; j < len(content); j++ {
 					content[j].Id--
 				}
 				data, err := json.Marshal(content)
@@ -46,7 +46,6 @@ var deleteCmd = &cobra.Command{
 			} else {
 				fmt.Println("Please specify a task within the task list")
 			}
-			
 
 			// file, err := os.OpenFile("../Tasks.txt", os.O_WRONLY|os.O_TRUNC|os.O_APPEND, 0666)
 			// if err!=nil{
@@ -63,7 +62,7 @@ var deleteCmd = &cobra.Command{
 			// 	}
 			// }
 			// defer file.Close()
-	}
+		}
 	},
 }
 
