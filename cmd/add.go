@@ -64,7 +64,9 @@ var addCmd = &cobra.Command{
 				data_new.Priority= priority
 				data_new.Status= status
 				data_old = append(data_old, taskListWrite(data_new))
-				jsonData, err := json.Marshal(data_old)
+				index+=1
+			}
+			jsonData, err := json.Marshal(data_old)
 				if err!=nil{
 					fmt.Println("Error converting into json", err)
 				}
@@ -72,8 +74,6 @@ var addCmd = &cobra.Command{
 				if err!=nil {
 					fmt.Println("Error writing to file", err)
 				}
-				index+=1
-			}
 		}
 
 	},
