@@ -4,6 +4,7 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"strconv"
@@ -14,16 +15,11 @@ import (
 // deleteCmd represents the delete command
 var deleteCmd = &cobra.Command{
 	Use:   "delete",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Delete specific task by id or the entire task list",
+	Long: `Delete specific task by id or the entire task list`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
-			_, err := os.OpenFile("/Users/uppuluridivyanthsatya/Desktop/Go/Tasks.txt", os.O_WRONLY|os.O_TRUNC, 0666)
+			_, err := os.OpenFile(Path, os.O_WRONLY|os.O_TRUNC, 0666)
 			if err!=nil{
 				fmt.Println("Cannot clear file", err)
 			}
@@ -33,25 +29,40 @@ to quickly create a Cobra application.`,
 			if err != nil {
 				fmt.Println("Please enter a valid index", err)
 			}
-			content, err := readFile("/Users/uppuluridivyanthsatya/Desktop/Go/Tasks.txt", "delete")
+			content, err := readFile(Path, "delete")
 			if err != nil {
 				fmt.Println("Error reading tasks", err)
 			}
-			file, err := os.OpenFile("../Tasks.txt", os.O_WRONLY|os.O_TRUNC|os.O_APPEND, 0666)
-			if err!=nil{
-				fmt.Println("Cannot clear file", err)
-			}
-
-			if ind > len(content) - 1 {
-				fmt.Println("Task does not exist")
-			} else{
-				for _, task := range content{
-					if(task.id!=ind){
-						file.WriteString(task.tasks + "\n")
-					}
+			if ind <=len(content)-1 {
+				content = append(content[:ind], content[ind+1:]...)
+				for j:=ind; j<len(content);j++{
+					content[j].Id--
 				}
+				data, err := json.Marshal(content)
+				if err != nil {
+					panic(err)
+				}
+				os.WriteFile(Path, data, 0664)
+			} else {
+				fmt.Println("Please specify a task within the task list")
 			}
-			defer file.Close()
+			
+
+			// file, err := os.OpenFile("../Tasks.txt", os.O_WRONLY|os.O_TRUNC|os.O_APPEND, 0666)
+			// if err!=nil{
+			// 	fmt.Println("Cannot clear file", err)
+			// }
+
+			// if ind > len(content) - 1 {
+			// 	fmt.Println("Task does not exist")
+			// } else{
+			// 	for _, task := range content{
+			// 		if(task.id!=ind){
+			// 			file.WriteString(task.tasks + "\n")
+			// 		}
+			// 	}
+			// }
+			// defer file.Close()
 	}
 	},
 }

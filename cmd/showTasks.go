@@ -9,10 +9,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type taskList struct{
-	id int
-	tasks string
-}
+var prioritySort string
+var statusSort string
 
 // showtasksCmd represents the showtasks command
 var showtasksCmd = &cobra.Command{
@@ -20,15 +18,21 @@ var showtasksCmd = &cobra.Command{
 	Short: "Shows list of tasks you have added",
 	Long: `Shows list of tasks you have added`,
 	Run: func(cmd *cobra.Command, args []string) {
-	 if _,err := readFile("/Users/uppuluridivyanthsatya/Desktop/Go/Tasks.txt", "showtasks"); err!=nil {
-		fmt.Println("Error showing tasks", err)
-	 }
-
+	if prioritySort != "" || statusSort != "" {
+		sortTasks(prioritySort, statusSort)
+	}else{
+		if _,err := readFile(Path, "showtasks"); err!=nil {
+			fmt.Println("Error showing tasks", err)
+		 }
+	}
+	 
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(showtasksCmd)
+	showtasksCmd.Flags().StringVarP(&prioritySort, "prioritysort", "p", "", "Sort tasks using priority")
+	showtasksCmd.Flags().StringVarP(&statusSort, "status", "s", "", "Filter by status")
 
 	// Here you will define your flags and configuration settings.
 

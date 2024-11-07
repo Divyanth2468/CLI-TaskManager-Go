@@ -17,12 +17,11 @@ var readCmd = &cobra.Command{
 	Long: `Read a specific task`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
-			_, err := readFile("/Users/uppuluridivyanthsatya/Desktop/Go/Tasks.txt", "showtasks")
-			if err!=nil {
+			if _, err := readFile(Path, "showtasks"); err!=nil {
 				fmt.Println("Not able to read tasks", err)
 			}
 		} else {
-			content, err := readFile("/Users/uppuluridivyanthsatya/Desktop/Go/Tasks.txt", "read")
+			content, err := readFile(Path, "read")
 			if err!=nil {
 				fmt.Println("Not able to read tasks", err)
 			}
@@ -30,7 +29,7 @@ var readCmd = &cobra.Command{
 			if err!=nil {
 				fmt.Println("Please give a number")
 			}
-			if len(content) > i {
+			if len(content)> i {
 				fmt.Println(content[i])
 			} else{
 				fmt.Println("Please specify a number within the task list")
