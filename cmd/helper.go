@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"time"
 )
 
 func (t taskListWrite) String() string {
-	return fmt.Sprintf("Index: %d Task: %s Priority: %s Status: %s", t.Id, t.Tasks, t.Priority, t.Status)
+	return fmt.Sprintf("Inex: %d Task: %s Description: %s Priority: %s Status: %s Deadline: %s", t.Id, t.Tasks, t.Description, t.Priority, t.Status, t.Time.UTC().Format(time.RFC1123))
 }
 
 func readFile(path string, caller string) ([]taskListWrite, error) {

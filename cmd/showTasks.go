@@ -11,6 +11,7 @@ import (
 
 var prioritySort string
 var statusSort string
+var timeSort string
 
 // showtasksCmd represents the showtasks command
 var showtasksCmd = &cobra.Command{
@@ -18,14 +19,13 @@ var showtasksCmd = &cobra.Command{
 	Short: "Shows list of tasks you have added",
 	Long:  `Shows list of tasks you have added`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if prioritySort != "" || statusSort != "" {
-			sortTasks(prioritySort, statusSort)
+		if prioritySort != "" || statusSort != "" || timeSort != "" {
+			sortTasks(prioritySort, statusSort, timeSort)
 		} else {
 			if _, err := readFile(Path, "showtasks"); err != nil {
 				fmt.Println("Error showing tasks", err)
 			}
 		}
-
 	},
 }
 
@@ -33,7 +33,7 @@ func init() {
 	rootCmd.AddCommand(showtasksCmd)
 	showtasksCmd.Flags().StringVarP(&prioritySort, "prioritysort", "p", "", "Sort tasks using priority")
 	showtasksCmd.Flags().StringVarP(&statusSort, "status", "s", "", "Filter by status")
-
+	showtasksCmd.Flags().StringVarP(&timeSort, "time", "t", "", "Filter by deadline")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

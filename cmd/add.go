@@ -8,19 +8,25 @@ import (
 	"fmt"
 	"os"
 
+	"time"
+
 	"github.com/spf13/cobra"
 )
 
 var Path string = "/Users/uppuluridivyanthsatya/Desktop/Go/Tasks.json"
 
+var description string
 var priority string
 var status string
+var deadline string
 
 type taskListWrite struct {
-	Id       int    `json:"Id"`
-	Tasks    string `json:"string"`
-	Priority string `json:"priority"`
-	Status   string `json:"status"`
+	Id          int       `json:"Id"`
+	Tasks       string    `json:"string"`
+	Description string    `json:"description"`
+	Priority    string    `json:"priority"`
+	Status      string    `json:"status"`
+	Time        time.Time `json:"time"`
 }
 
 // addCmd represents the add command
@@ -61,8 +67,14 @@ var addCmd = &cobra.Command{
 			for _, arg := range args {
 				data_new.Id = index
 				data_new.Tasks = arg
+				data_new.Description = description
 				data_new.Priority = priority
 				data_new.Status = status
+				data_new.Time, err = time.Parse(time.RFC1123, deadline)
+				if err != nil {
+					fmt.Println("Error parsing deadline", err)
+				}
+				// fmt.Println(data_new.Time)
 				data_old = append(data_old, taskListWrite(data_new))
 				index += 1
 			}
@@ -83,6 +95,8 @@ func init() {
 	rootCmd.AddCommand(addCmd)
 	addCmd.Flags().StringVarP(&priority, "priority", "p", "low", "Set the priority of the task")
 	addCmd.Flags().StringVarP(&status, "status", "s", "running", "Set the status of the task")
+	addCmd.Flags().StringVarP(&description, "description", "d", "None", "Set the description of task")
+	addCmd.Flags().StringVarP(&deadline, "deadline", "t", time.Now().UTC().Add(24*time.Hour).Format(time.RFC1123), "Set the deadline in the format Mon, 02 Jan 2006 15:04:05 MST")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
